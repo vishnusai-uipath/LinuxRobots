@@ -2,8 +2,8 @@ name: UiPath Automation Pipeline
 
 env:
   TEST_SETS: "HelloWorld_TestSet"
-  DOCKER_TLS_CERTDIR: ""
-  DOCKER_HOST: tcp://docker:2375
+  #DOCKER_TLS_CERTDIR: ""
+  #DOCKER_HOST: tcp://docker:2375
 
 on:
   push:
