@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>UiPath.CLI</id>
+    <version>24.10.9050.17872</version>
+    <authors>UiPath Inc.</authors>
+    <icon>UI_icon.png</icon>
+    <description>Package Description</description>
+    <repository type="git" commit="d6e7b0e8f394f63d4825e3e0ca543f80e28188a6" />
+    <dependencies>
+      <group targetFramework="net8.0" />
+    </dependencies>
+  </metadata>
+</package>
