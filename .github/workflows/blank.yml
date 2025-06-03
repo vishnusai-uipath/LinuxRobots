@@ -37,6 +37,7 @@ jobs:
           else
             docker pull registry.uipath.com/robot/runtime
             docker run -e LICENSE_AGREEMENT=accept -e ORCHESTRATOR_URL="https://cloud.uipath.com/vishnnu/UiPath/orchestrator_/" -e MACHINE_KEY="c12fa89b-0448-431f-9335-3d7c5fbae56c" -tid registry.uipath.com/robot/uiautomation-runtime:latest24.10
+          fi  
   
       - name: Run Test with UiPath CLI
         run: |
