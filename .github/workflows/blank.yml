@@ -1,0 +1,42 @@
+name: UiPath Automation Pipeline
+
+env:
+  TEST_SETS: "HelloWorld_TestSet"
+  DOCKER_TLS_CERTDIR: ""
+  DOCKER_HOST: tcp://docker:2375
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  robot_installation:
+    name: Robot Installation
+    runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:20.10.7-dind
+        options: --privileged
+    container:
+      image: mcr.microsoft.com/dotnet/sdk:8.0
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Check Docker
+        run: docker info
+
+      - name: Pull and Run UiPath Robot Container
+        run: |
+          if docker ps -a --format '{{.Image}}' | grep -q "uiautomation-runtime:latest24.10"; then
+            echo "Robot already installed. Skipping pull and run steps."
+          else
+            docker pull registry.uipath.com/robot/runtime
+            docker run -e LICENSE_AGREEMENT=accept -e ORCHESTRATOR_URL="https://cloud.uipath.com/vishnnu/UiPath/orchestrator_/" -e MACHINE_KEY="c12fa89b-0448-431f-9335-3d7c5fbae56c" -tid registry.uipath.com/robot/uiautomation-runtime:latest24.10
+  
+      - name: Run Test with UiPath CLI
+        run: |
+          cd ./uipathcli/tools
+          chmod 777 uipcli.dll
+          dotnet uipcli.dll test run "https://cloud.uipath.com/" UiPath -A vishnnu -I ab86142f-590f-4161-a6a8-0536279b2870 -S "lhSbmHCSJjD~1d@m" --applicationScope "OR.Assets OR.BackgroundTasks OR.Execution OR.Folders OR.Jobs OR.Machines.Read OR.Robots.Read OR.Settings.Read OR.Tasks OR.TestSetExecutions OR.TestSets OR.TestSetSchedules OR.Users.Read" -s "CrossPlatform" -o "Shared"
