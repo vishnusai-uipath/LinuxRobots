@@ -18,11 +18,14 @@ jobs:
       docker:
         image: docker:20.10.7-dind
         options: --privileged
-    container:
-      image: mcr.microsoft.com/dotnet/sdk:8.0
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      
+      - name: Setup .NET 8 SDK      
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
 
       - name: Check Docker
         run: docker info
